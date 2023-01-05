@@ -11,7 +11,6 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "outDir": "./dist/esm",
-    "declarationDir": "./dist/types",
     "isolatedModules": true,
     "sourceRoot": "src",
     "noPropertyAccessFromIndexSignature": false,
