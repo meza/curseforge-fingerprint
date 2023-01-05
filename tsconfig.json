@@ -1,6 +1,7 @@
 {
   "extends": "@meza/tsconfig-base",
   "compilerOptions": {
+    "declaration": true,
     "tsBuildInfoFile": ".cache/.tsbuildinfo",
     "incremental": true,
     "target": "esnext",
@@ -28,5 +29,8 @@
   ],
   "ts-node": {
     "files": true
-  }
+  },
+  "files": [
+    "src/curseforge.d.ts"
+  ]
 }

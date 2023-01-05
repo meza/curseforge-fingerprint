@@ -2,7 +2,6 @@
   "name": "@meza/curseforge-fingerprint",
   "version": "0.0.0",
   "description": "Native binding to the curseforge fingerprinting algorithm",
-  "main": "src/index.ts",
   "private": false,
   "publishConfig": {
     "access": "public",
@@ -13,11 +12,9 @@
   },
   "exports": {
     ".": {
-      "import": {
-        "types": "dist/types/index.d.ts",
-        "require": "dist/cjs/index.js",
-        "import": "dist/esm/index.js"
-      }
+      "types": "dist/types/index.d.ts",
+      "require": "dist/cjs/index.js",
+      "import": "dist/esm/index.js"
     }
   },
   "repository": {
