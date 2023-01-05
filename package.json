@@ -5,7 +5,11 @@
   "main": "src/index.ts",
   "private": false,
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "ignore": [
+      "!dist/",
+      "!src/"
+    ]
   },
   "exports": {
     ".": {
@@ -29,6 +33,7 @@
   },
   "homepage": "https://github.com/meza/curseforge-fingerprint#readme",
   "scripts": {
+    "prepack": "npmignore --auto",
     "prebuild": "node-gyp configure",
     "build": "node-gyp build && tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
     "postbuild": "npm run copy",

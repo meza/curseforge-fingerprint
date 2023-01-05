@@ -28,6 +28,8 @@ jobs:
         with:
           node-version: latest
           cache-name: ${{ needs.verify.outputs.cache-name }}
+      - name: "Build"
+        run: npm run build
       - name: 🚀 Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
