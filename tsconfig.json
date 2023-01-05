@@ -29,8 +29,5 @@
   ],
   "ts-node": {
     "files": true
-  },
-  "files": [
-    "src/curseforge.d.ts"
-  ]
+  }
 }

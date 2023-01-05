@@ -1,6 +1,6 @@
-import curseforge from '../addon/curseforge.node';
+const curseforge = require('../addon/curseforge.node');
 
-interface Curseforge {
+export interface Curseforge {
   fingerprint: (filePath: string) => number;
 }
 
