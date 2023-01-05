@@ -70,7 +70,6 @@ namespace murmur {
   uint32_t compute_hash(Buffer& buffer) {
     const uint32_t multiplex = 1540483477;
     const uint32_t length = buffer.size();
-    const uint32_t testI = 32;
     uint32_t num1 = length;
 
     num1 = compute_normalized_length(buffer);
@@ -95,14 +94,6 @@ namespace murmur {
           num3 = 0;
           num4 = 0;
         }
-      }
-
-      if (index == testI) {
-        std::cout << "b: " << std::endl;
-        std::cout << "num1: " << num1 << std::endl;
-        std::cout << "num2: " << num2 << std::endl;
-        std::cout << "num3: " << num3 << std::endl;
-        std::cout << "num4: " << num4 << std::endl;
       }
     }
 
