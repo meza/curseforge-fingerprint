@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "description": "Native binding to the curseforge fingerprinting algorithm",
   "main": "src/index.ts",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "import": {
