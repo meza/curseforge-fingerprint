@@ -1,0 +1,95 @@
+{
+  "name": "curseforge-fingerprint",
+  "version": "0.0.0",
+  "description": "Native binding to the curseforge fingerprinting algorithm",
+  "main": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "dist/types/index.d.ts",
+        "require": "dist/cjs/index.js",
+        "import": "dist/esm/index.js"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meza/curseforge-fingerprint.git"
+  },
+  "type": "module",
+  "gypfile": true,
+  "author": "meza",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/meza/curseforge-fingerprint/issues"
+  },
+  "homepage": "https://github.com/meza/curseforge-fingerprint#readme",
+  "scripts": {
+    "prebuild": "node-gyp configure",
+    "build": "node-gyp build && tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
+    "postbuild": "npm run copy",
+    "copy": "copyfiles -f ./build/Release/*.node dist/addon",
+    "commit": "cz",
+    "ci": "npm-run-all --parallel -c lint report",
+    "clean": "npm-run-all clean:basics",
+    "clean:all": "npm-run-all clean:basics clean:cache clean:githooks clean:dependencies",
+    "clean:basics": "rimraf dist",
+    "clean:cache": "rimraf .cache",
+    "clean:githooks": "lefthook uninstall -k",
+    "clean:dependencies": "rimraf node_modules",
+    "lint:specific": "eslint --ext .ts --ext .json --cache --cache-location .cache/",
+    "lint:eslint": "npm run lint:specific src",
+    "lint:tsc": "tsc --noEmit",
+    "lint:fix": "npm run lint:eslint --fix && pnpm lint:tsc",
+    "lint": "npm-run-all --parallel lint:eslint lint:tsc",
+    "test": "exit 0",
+    "report": "vitest --coverage",
+    "semantic-release": "semantic-release",
+    "release": "semantic-release",
+    "postinstall": "lefthook install && npm run copy"
+  },
+  "dependencies": {
+    "@types/node": "^18.7.23",
+    "core-js": "^3.25.3",
+    "node-addon-api": "^5.0.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.3.0",
+    "@commitlint/config-conventional": "17.3.0",
+    "@commitlint/prompt-cli": "17.3.0",
+    "@meza/adr-tools": "1.0.10",
+    "@meza/tsconfig-base": "1.1.0",
+    "@ryansonshine/commitizen": "4.2.8",
+    "@ryansonshine/cz-conventional-changelog": "3.3.4",
+    "@semantic-release/changelog": "6.0.2",
+    "@semantic-release/commit-analyzer": "9.0.2",
+    "@semantic-release/exec": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "8.0.7",
+    "@semantic-release/npm": "9.0.1",
+    "@semantic-release/release-notes-generator": "10.0.3",
+    "@types/uuid": "8.3.4",
+    "@typescript-eslint/eslint-plugin": "5.47.1",
+    "@typescript-eslint/parser": "5.47.1",
+    "copyfiles": "^2.4.1",
+    "eslint": "8.31.0",
+    "eslint-config-tailored-tunes": "5.0.2",
+    "eslint-plugin-json": "3.1.0",
+    "eslint-plugin-security": "1.5.0",
+    "is-ci": "3.0.1",
+    "lefthook": "1.2.6",
+    "node-gyp": "^9.3.1",
+    "npm-run-all": "4.1.5",
+    "rimraf": "3.0.2",
+    "semantic-release": "19.0.5",
+    "semantic-release-export-data": "1.0.1",
+    "ts-node": "10.9.1",
+    "typescript": "4.9.4",
+    "uuid": "9.0.0"
+  }
+}

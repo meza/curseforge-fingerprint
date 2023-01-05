@@ -1,0 +1,32 @@
+{
+  "extends": "@meza/tsconfig-base",
+  "compilerOptions": {
+    "tsBuildInfoFile": ".cache/.tsbuildinfo",
+    "incremental": true,
+    "target": "esnext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "emitDeclarationOnly": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "outDir": "./dist/esm",
+    "declarationDir": "./dist/types",
+    "isolatedModules": true,
+    "sourceRoot": "src",
+    "noPropertyAccessFromIndexSignature": false,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "ts-node": {
+    "files": true
+  }
+}
