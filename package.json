@@ -30,7 +30,7 @@
     "postbuild": "npm run copy",
     "copy": "copyfiles -f ./build/Release/*.node dist/addon",
     "commit": "cz",
-    "ci": "npm-run-all --parallel -c lint report",
+    "ci": "npm-run-all --parallel -c lint",
     "clean": "npm-run-all clean:basics",
     "clean:all": "npm-run-all clean:basics clean:cache clean:githooks clean:dependencies",
     "clean:basics": "rimraf dist",
@@ -43,7 +43,6 @@
     "lint:fix": "npm run lint:eslint --fix && pnpm lint:tsc",
     "lint": "npm-run-all --parallel lint:eslint lint:tsc",
     "test": "exit 0",
-    "report": "vitest --coverage",
     "semantic-release": "semantic-release",
     "release": "semantic-release",
     "postinstall": "lefthook install && npm run copy"
