@@ -27,6 +27,18 @@ yarn: `yarn add @meza/curseforge-fingerprint`
 
 pnpm: `pnpm add @meza/curseforge-fingerprint`
 
+# Usage
+
+```javascript
+
+import curseforge from '@meza/curseforge-fingerprint';
+import path from 'path';
+
+const file = path.resolve('/path/to/jar');
+const fingerprint = curseforge.fingerprint(file);
+
+```
+
 # Please Help
 
 If you can help make the c++ code cleaner or to make the node module more user friendly, please submit a pull request.
