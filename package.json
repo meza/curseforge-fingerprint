@@ -31,7 +31,7 @@
   "scripts": {
     "prepack": "npmignore --auto",
     "prebuild": "node-gyp configure",
-    "build": "node-gyp build && tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
+    "build": "node-gyp build --debug && tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
     "postbuild": "npm run copy",
     "copy": "copyfiles -f ./build/Release/*.node dist/addon",
     "commit": "cz",
@@ -55,9 +55,9 @@
   },
   "dependencies": {
     "@types/node": "^18.7.23",
-    "core-js": "^3.25.3",
-    "node-addon-api": "^5.0.0",
     "copyfiles": "^2.4.1",
+    "core-js": "^3.25.3",
+    "node-addon-api": "^5.1.0",
     "node-gyp": "^9.3.1",
     "typescript": "4.9.4"
   },

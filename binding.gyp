@@ -1,16 +1,16 @@
 {
   "targets": [
     {
-      'defines': [ 'V8_DEPRECATION_WARNINGS=1' ],
+      'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ],
       "target_name": "curseforge",
       "sources": [
         "src/binding.cc"
       ],
-      'conditions': [
-        [ 'OS in "linux freebsd openbsd solaris android aix cloudabi"', {
-          'cflags': ['-Wno-cast-function-type'],
-        }],
-      ]
+      "cflags!": [ "-fno-exceptions" ],
+      "cflags_cc!": [ "-fno-exceptions" ],
+      "include_dirs": [
+          "<!@(node -p \"require('node-addon-api').include\")"
+       ]
     }
   ]
 }
