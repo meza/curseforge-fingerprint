@@ -40,7 +40,7 @@
     "clean:all": "npm-run-all clean:basics clean:cache clean:githooks clean:dependencies",
     "clean:basics": "rimraf dist",
     "clean:cache": "rimraf .cache",
-    "clean:githooks": "lefthook uninstall -k",
+    "clean:githooks": "lefthook uninstall",
     "clean:dependencies": "rimraf node_modules",
     "lint:specific": "eslint --ext .ts --ext .json --cache --cache-location .cache/",
     "lint:eslint": "npm run lint:specific src",
