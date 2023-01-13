@@ -50,7 +50,8 @@
     "test": "exit 0",
     "semantic-release": "semantic-release",
     "release": "semantic-release",
-    "postinstall": "lefthook install && npm run copy"
+    "prepare": "lefthook install && npm run copy",
+    "postinstall": "copyfiles -f ./build/Release/*.node dist/addon"
   },
   "dependencies": {
     "@types/node": "^18.7.23",
