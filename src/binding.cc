@@ -25,8 +25,8 @@ Napi::Value HashIt(const Napi::CallbackInfo& args) {
   }
 
   Napi::String path = args[0].As<Napi::String>();
-
-  char* jar_file_path = (char*)path.Utf8Value().c_str();
+  std::string path_u8 = path.Utf8Value();
+  char* jar_file_path = (char*)path_u8.c_str();
 
   Buffer jar_buffer = get_jar_contents(jar_file_path);
     if (jar_buffer.empty()) {
