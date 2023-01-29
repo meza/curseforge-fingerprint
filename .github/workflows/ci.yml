@@ -7,15 +7,18 @@ env:
 
 jobs:
   verify:
-    uses: meza/shared-github-workflows/.github/workflows/default-node-npm-ci.yml@main
-    secrets:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    with:
-        test: true
-        node-version: "latest"
-        junit-report-path: "reports/junit.xml"
-        cobertura-report-path: "reports/coverage/cobertura-coverage.xml"
+    - name: "Install deps"
+      run: sudo apt install -y gcc-multilib g++-multilib
+    - uses: actions/checkout@v3
+    - name: Set up node
+      uses: meza/action-setup-node-npm@main
+      with:
+        node-version: latest
+        cache-name: ${{ needs.verify.outputs.cache-name }}
+    - name: "Build"
+      run: npm run build
+    - name: "Test"
+      run: npm run test
   build:
     runs-on: [windows-latest, ubuntu-latest, macos-latest]
     needs: [ verify ]
