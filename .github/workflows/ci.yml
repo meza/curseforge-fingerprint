@@ -17,11 +17,10 @@ jobs:
         junit-report-path: "reports/junit.xml"
         cobertura-report-path: "reports/coverage/cobertura-coverage.xml"
   build:
-    os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: [windows-latest, ubuntu-latest, macos-latest]
     needs: [ verify ]
     if: needs.verify.outputs.new-release-published == 'true'
-    name: Build binaries for ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Build binaries for ${{ matrix.runs-on }}
     steps:
       - name: "Install deps"
         run: sudo apt install -y gcc-multilib g++-multilib
