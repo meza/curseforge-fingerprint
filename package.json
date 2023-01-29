@@ -52,7 +52,7 @@
     "test": "node --no-warnings --loader ts-node/esm src/index.test.ts",
     "semantic-release": "semantic-release",
     "release": "semantic-release",
-    "prepare": "lefthook install && npm run copy",
+    "prepare": "lefthook install",
     "install": "node-gyp-build",
     "upload": "prebuild --upload-all"
   },
