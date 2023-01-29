@@ -17,6 +17,7 @@
       "import": "./dist/esm/index.js"
     }
   },
+  "main": "./dist/cjs/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meza/curseforge-fingerprint.git"
@@ -54,7 +55,7 @@
     "semantic-release": "semantic-release",
     "release": "semantic-release",
     "prepare": "lefthook install && npm run copy",
-    "postinstall": "copyfiles -f ./build/Release/obj.target/*.node dist/addon"
+    "install": "node-gyp-build"
   },
   "binary": {
     "napi_versions": [
