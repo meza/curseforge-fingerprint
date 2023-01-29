@@ -1,9 +1,7 @@
-import { createRequire } from 'module';
-
-const curseforge = createRequire(import.meta.url)('../addon/curseforge.node');
+const curseforge = require('node-gyp-build')('curseforge');
 
 export interface Curseforge {
   fingerprint: (filePath: string) => number;
 }
 
-export default curseforge as Curseforge;
+module.exports = curseforge as Curseforge;
