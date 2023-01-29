@@ -15,6 +15,9 @@
       "include_dirs": [],
       "libraries": [],
       "dependencies": [],
+      "variables" : {
+          "openssl_fips": "",
+      },
       "conditions": [
         [
           "OS==\"win\"", {}],

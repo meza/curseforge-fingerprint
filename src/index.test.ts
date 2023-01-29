@@ -1,4 +1,4 @@
-const curseforge = require('../dist/addon/curseforge.node');
+const curseforge = require('../dist/cjs/index.js');
 const path = require('node:path');
 
 const file1 = path.resolve(__dirname, '__fixtures__', 'test1.md');
