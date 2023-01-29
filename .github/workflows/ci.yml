@@ -30,6 +30,8 @@ jobs:
           cache-name: ${{ needs.verify.outputs.cache-name }}
       - name: "Build"
         run: npm run build
+      - name: "Test"
+        run: npm run test
       - name: 🚀 Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
