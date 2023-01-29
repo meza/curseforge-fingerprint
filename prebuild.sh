@@ -1,6 +1,6 @@
 #!/bin/bash
 
-prebuildify --napi --strip
+prebuildify --napi --all --strip
 prebuildify --arch=ia32 --napi --strip
 
 #TARGET=node@18.5.0
