@@ -32,7 +32,7 @@ jobs:
           node-version: latest
           cache-name: ${{ needs.verify.outputs.cache-name }}
       - name: Set version
-        run: npm version ${{ needs.verify.outputs.new-release-version }}
+        run: npm version --no-git-tag-version ${{ needs.verify.outputs.new-release-version }}
       - name: "Build"
         run: npm run build && npm run build:prebuilds
       - name: "Test"
