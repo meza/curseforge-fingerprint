@@ -32,9 +32,9 @@ jobs:
           node-version: latest
           cache-name: ${{ needs.verify.outputs.cache-name }}
       - name: Set version
-        run: npm version ${{ needs.verify.outputs.new-version }}
+        run: npm version ${{ needs.verify.outputs.new-release-version }}
       - name: "Build"
-        run: npm run build
+        run: npm run build && npm run build:prebuilds
       - name: "Test"
         run: npm run test
       - name: "Upload binaries"
