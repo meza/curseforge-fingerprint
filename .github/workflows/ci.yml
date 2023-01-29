@@ -31,6 +31,8 @@ jobs:
         with:
           node-version: latest
           cache-name: ${{ needs.verify.outputs.cache-name }}
+      - name: Set version
+        run: npm version ${{ needs.verify.outputs.new-version }}
       - name: "Build"
         run: npm run build
       - name: "Test"
