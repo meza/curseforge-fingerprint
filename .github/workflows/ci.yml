@@ -22,6 +22,8 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
+      - name: "Install deps"
+        run: sudo apt install -y gcc-multilib g++-multilib
       - uses: actions/checkout@v3
       - name: Set up node
         uses: meza/action-setup-node-npm@main
