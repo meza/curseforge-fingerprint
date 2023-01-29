@@ -12,12 +12,31 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     with:
-        test: false
+        test: true
         node-version: "latest"
         junit-report-path: "reports/junit.xml"
         cobertura-report-path: "reports/coverage/cobertura-coverage.xml"
-  release:
+  build:
+    os: [windows-latest, ubuntu-latest, macos-latest]
     needs: [ verify ]
+    if: needs.verify.outputs.new-release-published == 'true'
+    name: Build binaries for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: "Install deps"
+        run: sudo apt install -y gcc-multilib g++-multilib
+      - uses: actions/checkout@v3
+      - name: Set up node
+        uses: meza/action-setup-node-npm@main
+        with:
+          node-version: latest
+          cache-name: ${{ needs.verify.outputs.cache-name }}
+      - name: "Build"
+        run: npm run build:gyp && npm run build:prebuilds
+      - name: "Upload binaries"
+        run: npm run upload ${{ secrets.GITHUB_TOKEN }}
+  release:
+    needs: [ verify, build ]
     if: needs.verify.outputs.new-release-published == 'true'
     name: Release
     runs-on: ubuntu-latest
@@ -32,8 +51,6 @@ jobs:
           cache-name: ${{ needs.verify.outputs.cache-name }}
       - name: "Build"
         run: npm run build
-      - name: "Test"
-        run: npm run test
       - name: 🚀 Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

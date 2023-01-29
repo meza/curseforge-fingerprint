@@ -1,4 +1,7 @@
 {
+  "variables" : {
+    "openssl_fips": "",
+  },
   "targets": [
     {
       "target_name": "curseforge",
@@ -15,9 +18,6 @@
       "include_dirs": [],
       "libraries": [],
       "dependencies": [],
-      "variables" : {
-          "openssl_fips": "",
-      },
       "conditions": [
         [
           "OS==\"win\"", {}],

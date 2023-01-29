@@ -32,11 +32,10 @@
   "scripts": {
     "prepack": "npmignore --auto",
     "prebuild": "node-gyp configure",
-    "build": "npm-run-all build:gyp build:ts build:prebuilds",
-    "build:gyp": "node-gyp-build --debug && npm run copy",
+    "build": "npm-run-all build:gyp build:ts",
+    "build:gyp": "node-gyp-build",
     "build:ts": "tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
     "build:prebuilds": "./prebuild.sh",
-    "copy": "copyfiles -f ./build/Release/*.node dist/addon",
     "commit": "cz",
     "ci": "npm-run-all --parallel -c lint",
     "clean": "npm-run-all clean:basics",
@@ -54,7 +53,8 @@
     "semantic-release": "semantic-release",
     "release": "semantic-release",
     "prepare": "lefthook install && npm run copy",
-    "install": "node-gyp-build"
+    "install": "node-gyp-build",
+    "upload": "prebuild --upload-all"
   },
   "binary": {
     "napi_versions": [
@@ -64,10 +64,10 @@
   "dependencies": {
     "@types/node": "^18.7.23",
     "bindings": "^1.5.0",
-    "copyfiles": "^2.4.1",
     "core-js": "^3.25.3",
     "node-gyp": "^9.3.1",
     "node-gyp-build": "^4.6.0",
+    "prebuild-install": "^7.1.1",
     "prebuildify": "^5.0.1",
     "typescript": "4.9.4"
   },
@@ -102,6 +102,7 @@
     "lefthook": "1.2.7",
     "npm-run-all": "4.1.5",
     "npmignore": "^0.3.0",
+    "prebuild": "^11.0.4",
     "rimraf": "3.0.2",
     "semantic-release": "19.0.5",
     "semantic-release-export-data": "1.0.1",
