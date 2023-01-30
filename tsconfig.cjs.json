@@ -1,32 +1,12 @@
 {
-  "extends": "@meza/tsconfig-base",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
-    "tsBuildInfoFile": ".cache/.tsbuildinfo",
-    "incremental": true,
     "target": "esnext",
     "module": "commonjs",
     "moduleResolution": "node16",
-    "emitDeclarationOnly": false,
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true,
-    "outDir": "./dist/cjs",
-    "isolatedModules": true,
-    "sourceRoot": "src",
-    "noPropertyAccessFromIndexSignature": false,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/types"
-    ],
+    "outDir": "./dist/cjs"
   },
   "include": [
     "src/cjs/**/*.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
-  "ts-node": {
-    "files": true
-  }
+  ]
 }

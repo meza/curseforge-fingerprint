@@ -7,7 +7,9 @@
     "access": "public",
     "ignore": [
       "!dist/",
-      "!src/",
+      "src/esm",
+      "src/cjs",
+      "tsconfig*",
       "!prebuilds/"
     ]
   },
@@ -45,7 +47,7 @@
     "build:gyp": "node-gyp-build",
     "build:ts": "npm-run-all build:cjs build:mjs",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
-    "build:mjs": "tsc -p ./tsconfig.mjs.json",
+    "build:mjs": "tsc -p tsconfig.json",
     "prebuilds": "run-script-os",
     "commit": "cz",
     "ci": "npm-run-all --parallel -c lint",

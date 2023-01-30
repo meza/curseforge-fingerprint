@@ -1,3 +1,29 @@
 {
-  "extends": "./tsconfig.mjs.json"
+  "extends": "@meza/tsconfig-base",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "tsBuildInfoFile": ".cache/.tsbuildinfo",
+    "incremental": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node16",
+    "emitDeclarationOnly": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "outDir": "./dist/esm",
+    "isolatedModules": true,
+    "sourceRoot": "src",
+    "noPropertyAccessFromIndexSignature": false
+  },
+  "include": [
+    "src/esm/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
+  "ts-node": {
+    "files": true
+  }
 }
