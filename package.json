@@ -56,8 +56,8 @@
     "install": "node-gyp-build",
     "prebuilds:windows": "npm-run-all prebuilds:x64",
     "prebuilds:default": "npm-run-all prebuilds:x64 prebuilds:arm64",
-    "prebuilds:x64": "prebuildify --napi --strip --target node@16.16.0 --arch x64",
-    "prebuilds:arm64": "prebuildify --napi --strip --target node@16.16.0 --arch arm64"
+    "prebuilds:x64": "prebuildify --napi --strip --arch x64",
+    "prebuilds:arm64": "prebuildify --napi --strip --arch arm64"
   },
   "binary": {
     "napi_versions": [
