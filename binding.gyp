@@ -6,9 +6,9 @@
     {
       "target_name": "curseforge",
       "sources": [
-        "src/fingerprint.h",
-        "src/fingerprint.cpp",
-        "src/binding.cc"
+        "src/addon/fingerprint.h",
+        "src/addon/fingerprint.cpp",
+        "src/addon/binding.cc"
       ],
       "cflags": [
         "-std=c++11",

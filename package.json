@@ -11,6 +11,8 @@
       "!prebuilds/"
     ]
   },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
@@ -19,7 +21,6 @@
     }
   },
   "type": "module",
-  "main": "./dist/index.cjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meza/curseforge-fingerprint.git"

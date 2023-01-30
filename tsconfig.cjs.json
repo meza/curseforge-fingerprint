@@ -20,7 +20,7 @@
     ],
   },
   "include": [
-    "src/**/*.cjs.ts"
+    "src/cjs/**/*.ts"
   ],
   "exclude": [
     "dist",
