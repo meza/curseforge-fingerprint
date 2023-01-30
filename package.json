@@ -13,13 +13,11 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
-      "default": "./dist/cjs/index.js"
+      "import": "./dist/esm/index.js"
     }
   },
-  "type": "module",
-  "main": "./dist/index.cjs",
+  "main": "./dist/cjs/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meza/curseforge-fingerprint.git"
@@ -36,9 +34,7 @@
     "prebuild": "node-gyp configure",
     "build": "npm-run-all build:gyp build:ts",
     "build:gyp": "node-gyp-build",
-    "build:ts": "npm-run-all build:cjs build:mjs",
-    "build:cjs": "tsc -p ./tsconfig.cjs.json",
-    "build:mjs": "tsc -p ./tsconfig.mjs.json",
+    "build:ts": "tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
     "prebuilds": "run-script-os",
     "commit": "cz",
     "ci": "npm-run-all --parallel -c lint",
@@ -48,9 +44,8 @@
     "clean:cache": "rimraf .cache",
     "clean:githooks": "lefthook uninstall",
     "clean:dependencies": "rimraf node_modules",
-    "lint:eslint": "npm-run-all lint:eslint:*",
-    "lint:eslint:cjs": "eslint --ext .cjs.ts --cache --cache-location .cache/ -c .eslintrc.cjs.json",
-    "lint:eslint:mjs": "eslint --ext .mjs.ts --cache --cache-location .cache/ -c .eslintrc.mjs.json",
+    "lint:specific": "eslint --ext .ts --ext .json --cache --cache-location .cache/",
+    "lint:eslint": "npm run lint:specific src",
     "lint:tsc": "tsc --noEmit",
     "lint:fix": "npm run lint:eslint --fix && pnpm lint:tsc",
     "lint": "npm-run-all --parallel lint:eslint lint:tsc",
