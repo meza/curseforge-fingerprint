@@ -7,7 +7,8 @@
     "access": "public",
     "ignore": [
       "!dist/",
-      "!src/"
+      "!src/",
+      "!prebuilds/"
     ]
   },
   "exports": {
@@ -16,11 +17,11 @@
       "import": "./dist/esm/index.js"
     }
   },
+  "main": "./dist/cjs/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meza/curseforge-fingerprint.git"
   },
-  "type": "module",
   "gypfile": true,
   "author": "meza",
   "license": "GPL-3.0",
@@ -31,9 +32,10 @@
   "scripts": {
     "prepack": "npmignore --auto",
     "prebuild": "node-gyp configure",
-    "build": "node-gyp build --debug && tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
-    "postbuild": "npm run copy",
-    "copy": "copyfiles -f ./build/Release/*.node dist/addon",
+    "build": "npm-run-all build:gyp build:ts",
+    "build:gyp": "node-gyp-build",
+    "build:ts": "tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
+    "prebuilds": "run-script-os",
     "commit": "cz",
     "ci": "npm-run-all --parallel -c lint",
     "clean": "npm-run-all clean:basics",
@@ -47,18 +49,29 @@
     "lint:tsc": "tsc --noEmit",
     "lint:fix": "npm run lint:eslint --fix && pnpm lint:tsc",
     "lint": "npm-run-all --parallel lint:eslint lint:tsc",
-    "test": "exit 0",
+    "test": "node --no-warnings --loader ts-node/esm src/index.test.ts",
     "semantic-release": "semantic-release",
     "release": "semantic-release",
-    "prepare": "lefthook install && npm run copy",
-    "postinstall": "copyfiles -f ./build/Release/*.node dist/addon"
+    "prepare": "lefthook install",
+    "install": "node-gyp-build",
+    "prebuilds:windows": "npm-run-all prebuilds:x64",
+    "prebuilds:default": "npm-run-all prebuilds:x64 prebuilds:arm64",
+    "prebuilds:x64": "prebuildify --napi --strip --arch x64",
+    "prebuilds:arm64": "prebuildify --napi --strip --arch arm64"
+  },
+  "binary": {
+    "napi_versions": [
+      8
+    ]
   },
   "dependencies": {
     "@types/node": "^18.7.23",
-    "copyfiles": "^2.4.1",
+    "bindings": "^1.5.0",
     "core-js": "^3.25.3",
-    "node-addon-api": "^5.1.0",
     "node-gyp": "^9.3.1",
+    "node-gyp-build": "^4.6.0",
+    "prebuild-install": "^7.1.1",
+    "prebuildify": "^5.0.1",
     "typescript": "4.9.4"
   },
   "commitlint": {
@@ -93,6 +106,7 @@
     "npm-run-all": "4.1.5",
     "npmignore": "^0.3.0",
     "rimraf": "3.0.2",
+    "run-script-os": "^1.1.6",
     "semantic-release": "19.0.5",
     "semantic-release-export-data": "1.0.1",
     "ts-node": "10.9.1",

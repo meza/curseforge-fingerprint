@@ -4,9 +4,9 @@
     "declaration": true,
     "tsBuildInfoFile": ".cache/.tsbuildinfo",
     "incremental": true,
-    "target": "esnext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "target": "ES6",
+    "module": "commonjs",
+    "moduleResolution": "nodenext",
     "emitDeclarationOnly": false,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
@@ -24,6 +24,7 @@
     "test/**/*.ts"
   ],
   "exclude": [
+    "dist",
     "node_modules"
   ],
   "ts-node": {

@@ -1,133 +1,67 @@
-#include <napi.h>
+#include <node_api.h>
+#include <assert.h>
+#include <cstring>
 #include <iostream>
-#include <vector>
 
-typedef std::vector<unsigned char> Buffer;
+#include "fingerprint.h"
 
-void print_usage();
-Buffer get_jar_contents(const char* jar_file_path);
-long get_file_size(FILE* file);
-uint32_t compute_hash(Buffer& buffer);
-bool is_whitespace_character(char b);
-uint32_t compute_normalized_length(Buffer& buffer);
+napi_value HashIt(napi_env env, const napi_callback_info info) {
+  napi_status status;
+  size_t argc = 1;
+  napi_value args[1];
+  napi_value result;
+  napi_valuetype type;
 
-Napi::Value HashIt(const Napi::CallbackInfo& args) {
-  Napi::Env env = args.Env();
+  status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+  assert(status == napi_ok);
 
-  if (args.Length() < 1) {
-    Napi::TypeError::New(env, "No file path given")
-        .ThrowAsJavaScriptException();
-    return env.Null();
-  }
-  if (!args[0].IsString()) {
-    Napi::TypeError::New(env, "File path must be a string").ThrowAsJavaScriptException();
-    return env.Null();
+  if (argc < 1) {
+    napi_throw_error(env, NULL, "Please specify a file path");
+    return 0;
   }
 
-  Napi::String path = args[0].As<Napi::String>();
-  std::string path_u8 = path.Utf8Value();
-  char* jar_file_path = (char*)path_u8.c_str();
+  // Parse jar path from args
+  const char* jar_file_path = NULL;
+  size_t jar_file_pathl;
 
-  Buffer jar_buffer = get_jar_contents(jar_file_path);
-    if (jar_buffer.empty()) {
-      Napi::TypeError::New(env, "Jar file was empty").ThrowAsJavaScriptException();
-          return env.Null();
-    }
-
-    const Napi::Number hash = Napi::Number::New(env, compute_hash(jar_buffer));
-
-    return hash;
-}
-
-Buffer get_jar_contents(const char* jar_file_path) {
-  int result;
-  FILE* jar_file = fopen(jar_file_path, "rb");
-  if (jar_file == nullptr) {
-    return Buffer();
+  status = napi_typeof(env, args[0], &type);
+  if (type != napi_string)
+  {
+    status = napi_create_string_utf8(env, "Please use a string for the pat", NAPI_AUTO_LENGTH, &result);
+    return result;
   }
 
-  long buffer_size = get_file_size(jar_file);
+  status = napi_get_value_string_utf8(env, args[0], NULL, 0, &jar_file_pathl);
+  jar_file_path = (char *)malloc(jar_file_pathl + 1);
+  status = napi_get_value_string_utf8(env, args[0], (char *)jar_file_path, jar_file_pathl + 1, &jar_file_pathl);
+  assert(status == napi_ok);
 
-  Buffer buffer(buffer_size);
-  result = fread(buffer.data(), 1, buffer_size, jar_file);
+  fingerprint::Buffer jar_buffer = fingerprint::get_jar_contents(jar_file_path);
 
-  if (result != buffer_size) {
-    std::cout << "Failed to load " << jar_file_path << std::endl;
+  if (jar_buffer.empty()) {
+    napi_throw_error(env, NULL, "Jar file was empty");
+    return 0;
   }
 
-  fclose(jar_file);
+  napi_value hash;
+  status = napi_create_uint32(env, fingerprint::compute_hash(jar_buffer), &hash);
+  assert(status == napi_ok);
 
-  return buffer;
+  return hash;
 }
 
-long get_file_size(FILE* file) {
-  fseek(file, 0, SEEK_END);
-  long size = ftell(file);
-  fseek(file, 0, SEEK_SET);
+napi_value Init(napi_env env, napi_value exports) {
+    napi_property_descriptor export_properties[] = {
+  	{
+  		"fingerprint", nullptr, HashIt,
+  		nullptr, nullptr, nullptr, napi_default, nullptr
+  	}
+      };
+      assert(napi_define_properties(env, exports,
+  	sizeof(export_properties) / sizeof(export_properties[0]), export_properties) == napi_ok);
 
-  return size;
+    return exports;
 }
 
-uint32_t compute_hash(Buffer& buffer) {
-  const uint32_t multiplex = 1540483477;
-  const uint32_t length = buffer.size();
-  uint32_t num1 = length;
-
-  num1 = compute_normalized_length(buffer);
-
-  uint32_t num2 = (uint32_t)1 ^ num1;
-  uint32_t num3 = 0;
-  uint32_t num4 = 0;
-
-  for (uint32_t index = 0; index < length; ++index) {
-
-    unsigned char b = buffer[index];
-
-    if (!is_whitespace_character(b)) {
-      num3 |= (uint32_t)b << num4;
-      num4 += 8;
-      if (num4 == 32) {
-        uint32_t num6 = num3 * multiplex;
-
-        uint32_t num7 = (num6 ^ num6 >> 24) * multiplex;
-
-        num2 = num2 * multiplex ^ num7;
-        num3 = 0;
-        num4 = 0;
-      }
-    }
-  }
-
-  if (num4 > 0) {
-    num2 = (num2 ^ num3) * multiplex;
-  }
-
-  uint32_t num6 = (num2 ^ num2 >> 13) * multiplex;
-
-  return num6 ^ num6 >> 15;
-}
-
-uint32_t compute_normalized_length(Buffer& buffer) {
-  int32_t num1 = 0;
-  const uint32_t length = buffer.size();
-
-  for (uint32_t index = 0; index < length; ++index) {
-    if (!is_whitespace_character(buffer[index])) {
-      ++num1;
-    }
-  }
-
-  return num1;
-}
-
-bool is_whitespace_character(char b) {
-  return b == 9 || b == 10 || b == 13 || b == 32;
-}
-
-Napi::Object Init(Napi::Env env, Napi::Object exports) {
-  exports.Set(Napi::String::New(env, "fingerprint"), Napi::Function::New(env, HashIt));
-  return exports;
-}
-
-NODE_API_MODULE(curseforge, Init);
+NAPI_MODULE(NODE_GYP_MODULE_NAME, Init)
 

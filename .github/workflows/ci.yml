@@ -16,8 +16,44 @@ jobs:
         node-version: "latest"
         junit-report-path: "reports/junit.xml"
         cobertura-report-path: "reports/coverage/cobertura-coverage.xml"
-  release:
+  build:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     needs: [ verify ]
+    if: needs.verify.outputs.new-release-published == 'true'
+    name: Build binaries for ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Python 3.10.6
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10.6'
+        env:
+          PYTHON_VERSION: '3.10.6'
+      - name: Set up node
+        uses: meza/action-setup-node-npm@main
+        with:
+          node-version: latest
+          cache-name: ${{ needs.verify.outputs.cache-name }}
+      - name: Set Windows environment
+        if: matrix.os == 'windows-latest'
+        run: |
+          echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
+          echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
+      - name: Set version
+        run: npm version --no-git-tag-version ${{ needs.verify.outputs.new-release-version }}
+      - name: "Build"
+        run: npm run build && npm run prebuilds
+      - name: "Test"
+        run: npm run test
+      - uses: actions/upload-artifact@master
+        with:
+          name: prebuilds-${{ matrix.os }}
+          path: prebuilds
+  release:
+    needs: [ verify, build ]
     if: needs.verify.outputs.new-release-published == 'true'
     name: Release
     runs-on: ubuntu-latest
@@ -30,6 +66,18 @@ jobs:
           cache-name: ${{ needs.verify.outputs.cache-name }}
       - name: "Build"
         run: npm run build
+      - uses: actions/download-artifact@master
+        with:
+          name: prebuilds-windows-latest
+          path: prebuilds
+      - uses: actions/download-artifact@master
+        with:
+          name: prebuilds-ubuntu-latest
+          path: prebuilds
+      - uses: actions/download-artifact@master
+        with:
+          name: prebuilds-macos-latest
+          path: prebuilds
       - name: 🚀 Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
