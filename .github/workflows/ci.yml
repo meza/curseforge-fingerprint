@@ -31,12 +31,12 @@ jobs:
         with:
           node-version: 16.16.0
           cache-name: ${{ needs.verify.outputs.cache-name }}
-      - name: Use Python 3.10
-        uses: actions/setup-python@v3
+      - name: Use Python 3.9
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.10
+          python-version: '3.9'
         env:
-          PYTHON_VERSION: 3.10
+          PYTHON_VERSION: '3.9'
       - name: Set Windows environment
         if: matrix.os == 'windows-latest'
         run: |
