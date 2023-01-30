@@ -35,7 +35,7 @@
     "build": "npm-run-all build:gyp build:ts",
     "build:gyp": "node-gyp-build",
     "build:ts": "tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
-    "build:prebuilds": "npm-run-all prebuild:*",
+    "prebuilds": "run-script-os",
     "commit": "cz",
     "ci": "npm-run-all --parallel -c lint",
     "clean": "npm-run-all clean:basics",
@@ -54,8 +54,10 @@
     "release": "semantic-release",
     "prepare": "lefthook install",
     "install": "node-gyp-build",
-    "prebuild:x64": "prebuildify --napi --strip --target node@16.16.0 --arch x64",
-    "prebuild:arm64": "prebuildify --napi --strip --target node@16.16.0 --arch arm64"
+    "prebuilds:windows": "npm-run-all prebuilds:x64",
+    "prebuilds:default": "npm-run-all prebuilds:x64 prebuilds:arm64",
+    "prebuilds:x64": "prebuildify --napi --strip --target node@16.16.0 --arch x64",
+    "prebuilds:arm64": "prebuildify --napi --strip --target node@16.16.0 --arch arm64"
   },
   "binary": {
     "napi_versions": [
@@ -104,6 +106,7 @@
     "npm-run-all": "4.1.5",
     "npmignore": "^0.3.0",
     "rimraf": "3.0.2",
+    "run-script-os": "^1.1.6",
     "semantic-release": "19.0.5",
     "semantic-release-export-data": "1.0.1",
     "ts-node": "10.9.1",
