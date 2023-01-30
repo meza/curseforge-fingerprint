@@ -35,7 +35,7 @@
     "build": "npm-run-all build:gyp build:ts",
     "build:gyp": "node-gyp-build",
     "build:ts": "tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
-    "build:prebuilds": "./prebuild.sh",
+    "build:prebuilds": "npm-run-all prebuild:*",
     "commit": "cz",
     "ci": "npm-run-all --parallel -c lint",
     "clean": "npm-run-all clean:basics",
@@ -54,7 +54,8 @@
     "release": "semantic-release",
     "prepare": "lefthook install",
     "install": "node-gyp-build",
-    "upload": "prebuild --upload-all"
+    "prebuild:x64": "prebuildify --napi --strip --target node@16.16.0 --arch x64",
+    "prebuild:arm64": "prebuildify --napi --strip --target node@16.16.0 --arch arm64"
   },
   "binary": {
     "napi_versions": [
