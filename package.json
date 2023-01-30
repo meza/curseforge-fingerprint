@@ -7,17 +7,28 @@
     "access": "public",
     "ignore": [
       "!dist/",
-      "!src/",
+      "src/esm",
+      "src/cjs",
+      "tsconfig*",
       "!prebuilds/"
     ]
   },
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js"
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
     }
   },
   "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "type": "module",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meza/curseforge-fingerprint.git"
@@ -34,7 +45,9 @@
     "prebuild": "node-gyp configure",
     "build": "npm-run-all build:gyp build:ts",
     "build:gyp": "node-gyp-build",
-    "build:ts": "tsc --module esnext --outDir dist/esm && tsc --module commonjs --outDir dist/cjs",
+    "build:ts": "npm-run-all build:cjs build:mjs",
+    "build:cjs": "tsc -p ./tsconfig.cjs.json",
+    "build:mjs": "tsc -p tsconfig.json",
     "prebuilds": "run-script-os",
     "commit": "cz",
     "ci": "npm-run-all --parallel -c lint",
@@ -44,8 +57,9 @@
     "clean:cache": "rimraf .cache",
     "clean:githooks": "lefthook uninstall",
     "clean:dependencies": "rimraf node_modules",
-    "lint:specific": "eslint --ext .ts --ext .json --cache --cache-location .cache/",
-    "lint:eslint": "npm run lint:specific src",
+    "lint:eslint": "npm-run-all lint:eslint:*",
+    "lint:eslint:cjs": "eslint --ext .cjs.ts --cache --cache-location .cache/ -c .eslintrc.cjs.json",
+    "lint:eslint:mjs": "eslint --ext .mjs.ts --cache --cache-location .cache/ -c .eslintrc.mjs.json",
     "lint:tsc": "tsc --noEmit",
     "lint:fix": "npm run lint:eslint --fix && pnpm lint:tsc",
     "lint": "npm-run-all --parallel lint:eslint lint:tsc",

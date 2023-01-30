@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node16",
+    "outDir": "./dist/cjs"
+  },
+  "include": [
+    "src/cjs/**/*.ts"
+  ]
+}
