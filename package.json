@@ -121,7 +121,7 @@
     "npmignore": "^0.3.0",
     "rimraf": "4.1.2",
     "run-script-os": "^1.1.6",
-    "semantic-release": "19.0.5",
+    "semantic-release": "20.1.0",
     "semantic-release-export-data": "1.0.1",
     "ts-node": "10.9.1",
     "uuid": "9.0.0"
