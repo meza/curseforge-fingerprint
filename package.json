@@ -94,9 +94,9 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "17.4.2",
-    "@commitlint/config-conventional": "17.4.2",
-    "@commitlint/prompt-cli": "17.4.2",
+    "@commitlint/cli": "17.4.3",
+    "@commitlint/config-conventional": "17.4.3",
+    "@commitlint/prompt-cli": "17.4.3",
     "@meza/adr-tools": "1.0.10",
     "@meza/tsconfig-base": "1.1.0",
     "@ryansonshine/commitizen": "4.2.8",
