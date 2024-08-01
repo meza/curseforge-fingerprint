@@ -17,18 +17,18 @@
     ".": {
       "import": {
         "types": "./dist/esm/index.d.ts",
-        "require": "./dist/esm/index.cjs",
+        "require": "./dist/cjs/index.cjs",
         "default": "./dist/esm/index.mjs"
       },
       "require": {
-        "import": "./dist/cjs/index.mjs",
         "types": "./dist/cjs/index.d.ts",
+        "import": "./dist/esm/index.mjs",
         "default": "./dist/cjs/index.cjs"
       }
     }
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
   "type": "module",
   "sideEffects": false,
   "repository": {
