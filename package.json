@@ -17,11 +17,13 @@
     ".": {
       "import": {
         "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
+        "require": "./dist/esm/index.cjs",
+        "default": "./dist/esm/index.mjs"
       },
       "require": {
+        "import": "./dist/cjs/index.mjs",
         "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
+        "default": "./dist/cjs/index.cjs"
       }
     }
   },
@@ -47,7 +49,8 @@
     "build:gyp": "node-gyp-build",
     "build:ts": "npm-run-all build:cjs build:mjs",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
-    "build:mjs": "tsc -p tsconfig.json",
+    "build:mjs": "tsc -p ./tsconfig.json",
+    "postbuild": "convert-extension mjs dist/esm && convert-extension cjs dist/cjs",
     "prebuilds": "run-script-os",
     "commit": "cz",
     "ci": "npm-run-all --parallel -c lint",
@@ -63,7 +66,7 @@
     "lint:tsc": "tsc --noEmit",
     "lint:fix": "npm run lint:eslint --fix && pnpm lint:tsc",
     "lint": "npm-run-all --parallel lint:eslint lint:tsc",
-    "test": "node --no-warnings --loader ts-node/esm src/index.test.ts",
+    "test": "tsx src/index.test.ts",
     "semantic-release": "semantic-release",
     "release": "semantic-release",
     "prepare": "lefthook install",
@@ -111,6 +114,7 @@
     "@types/uuid": "9.0.2",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
+    "convert-extension": "^0.3.0",
     "eslint": "8.46.0",
     "eslint-config-tailored-tunes": "5.0.2",
     "eslint-plugin-json": "3.1.0",
@@ -124,6 +128,7 @@
     "semantic-release": "20.1.3",
     "semantic-release-export-data": "1.0.1",
     "ts-node": "10.9.1",
+    "tsx": "^4.16.5",
     "uuid": "9.0.0"
   }
 }

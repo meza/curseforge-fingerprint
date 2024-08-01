@@ -1,4 +1,4 @@
-import curseforge from '../dist/esm/index.js';
+import curseforge from '../dist/esm/index.mjs';
 import path from 'node:path';
 import url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
