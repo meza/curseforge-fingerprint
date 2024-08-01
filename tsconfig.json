@@ -2,26 +2,22 @@
   "extends": "@meza/tsconfig-base",
   "compilerOptions": {
     "declaration": true,
+    "declarationMap": true,
     "tsBuildInfoFile": ".cache/.tsbuildinfo",
     "incremental": true,
-    "target": "ES6",
-    "module": "commonjs",
-    "moduleResolution": "nodenext",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node16",
     "emitDeclarationOnly": false,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "outDir": "./dist/esm",
     "isolatedModules": true,
     "sourceRoot": "src",
-    "noPropertyAccessFromIndexSignature": false,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/types"
-    ]
+    "noPropertyAccessFromIndexSignature": false
   },
   "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
+    "src/esm/**/*.ts"
   ],
   "exclude": [
     "dist",
