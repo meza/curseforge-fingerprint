@@ -111,7 +111,7 @@
     "@semantic-release/github": "8.1.0",
     "@semantic-release/npm": "9.0.2",
     "@semantic-release/release-notes-generator": "10.0.3",
-    "@types/uuid": "9.0.2",
+    "@types/uuid": "10.0.0",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "convert-extension": "^0.3.0",
@@ -129,6 +129,6 @@
     "semantic-release-export-data": "1.0.1",
     "ts-node": "10.9.1",
     "tsx": "^4.16.5",
-    "uuid": "9.0.0"
+    "uuid": "10.0.0"
   }
 }
