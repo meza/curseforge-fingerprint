@@ -115,7 +115,7 @@
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "convert-extension": "^0.3.0",
-    "eslint": "8.46.0",
+    "eslint": "8.57.1",
     "eslint-config-tailored-tunes": "5.0.2",
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-security": "1.7.1",
