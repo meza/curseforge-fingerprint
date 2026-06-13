@@ -25,11 +25,11 @@ jobs:
     if: needs.verify.outputs.new-release-published == 'true'
     name: Build binaries for ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.6.0
       - name: Use Python 3.10.6
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v4.9.1
         with:
-          python-version: '>=3.10.6'
+          python-version: '3.14.6'
       - name: Install dependencies
         run: python3 -m pip install setuptools
       - name: Set up node
@@ -58,7 +58,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.6.0
       - name: Set up node
         uses: meza/action-setup-node-npm@main
         with:
