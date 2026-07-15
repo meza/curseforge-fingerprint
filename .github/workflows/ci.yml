@@ -19,7 +19,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ self-hosted, windows-latest, macos-latest ]
+        os: [ meza-ubuntu-latest, meza-windows-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
     needs: [ verify ]
     if: needs.verify.outputs.new-release-published == 'true'
