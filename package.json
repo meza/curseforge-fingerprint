@@ -100,7 +100,7 @@
     "@commitlint/cli": "17.7.0",
     "@commitlint/config-conventional": "17.7.0",
     "@commitlint/prompt-cli": "17.7.0",
-    "@meza/adr-tools": "1.0.10",
+    "@meza/adr-tools": "1.0.12",
     "@meza/tsconfig-base": "1.1.0",
     "@ryansonshine/commitizen": "4.2.8",
     "@ryansonshine/cz-conventional-changelog": "3.3.4",
