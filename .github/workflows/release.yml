@@ -1,0 +1,94 @@
+name: Release
+
+on:
+  schedule:
+    - cron: '0 9 * * 2'
+      timezone: Europe/London
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
+env:
+  LEFTHOOK: 0
+
+jobs:
+  verify:
+    uses: meza/shared-github-workflows/.github/workflows/default-node-npm-ci.yml@cf630bfc334354a662e60d05adaf7615b7399b00 # main
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+        test: false
+        node-version: "latest"
+        junit-report-path: "reports/junit.xml"
+        cobertura-report-path: "reports/coverage/cobertura-coverage.xml"
+  build:
+    strategy:
+      matrix:
+        os: [ meza-ubuntu-slim, meza-windows-slim, macos-latest ]
+    runs-on: ${{ matrix.os }}
+    needs: [ verify ]
+    if: needs.verify.outputs.new-release-published == 'true'
+    name: Build binaries for ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Use Python 3.10.6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '>=3.10.6'
+      - name: Install dependencies
+        run: python3 -m pip install setuptools
+      - name: Set up node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: package.json
+          cache: 'npm'
+      - name: Set Windows environment
+        if: matrix.os == 'windows-latest'
+        run: |
+          echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
+          echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
+      - name: Set version
+        run: npm version --no-git-tag-version ${{ needs.verify.outputs.new-release-version }}
+      - name: "Build"
+        run: npm run build && npm run prebuilds
+      - name: "Test"
+        run: npm run test
+      - uses: actions/upload-artifact@0c366cb4fc8897159c94880f94b55bc716ad6a66 # master
+        with:
+          name: prebuilds-${{ matrix.os }}
+          path: prebuilds
+  release:
+    needs: [ verify, build ]
+    if: needs.verify.outputs.new-release-published == 'true'
+    name: Release
+    runs-on: meza-ubuntu-slim
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: package.json
+          cache: 'npm'
+      - name: "Build"
+        run: npm run build
+      - uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
+        with:
+          name: prebuilds-windows-latest
+          path: prebuilds
+      - uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
+        with:
+          name: prebuilds-self-hosted
+          path: prebuilds
+      - uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
+        with:
+          name: prebuilds-macos-latest
+          path: prebuilds
+      - name: 🚀 Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release
