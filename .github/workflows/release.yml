@@ -37,7 +37,7 @@ jobs:
       - run: npx semantic-release --dry-run
         id: get-next-version
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
       - env:
           NEED_RELEASE: ${{ steps.get-next-version.outputs.new-release-published }}
         run: echo "Need release? $NEED_RELEASE" >> "$GITHUB_STEP_SUMMARY"
@@ -106,5 +106,5 @@ jobs:
           path: prebuilds
       - name: 🚀 Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: npm run release
