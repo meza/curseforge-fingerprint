@@ -53,7 +53,7 @@
     "postbuild": "convert-extension mjs dist/esm && convert-extension cjs dist/cjs",
     "prebuilds": "run-script-os",
     "commit": "cz",
-    "ci": "npm-run-all --parallel -c lint",
+    "ci": "npm-run-all build lint test",
     "clean": "npm-run-all clean:basics",
     "clean:all": "npm-run-all clean:basics clean:cache clean:githooks clean:dependencies",
     "clean:basics": "rimraf dist",
