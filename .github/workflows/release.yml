@@ -18,7 +18,7 @@ env:
 
 jobs:
   verify:
-    runs-on: meza-ubuntu-slim
+    runs-on: ubuntu-slim
     name: 🔎 Lint and Test
     outputs:
       new-release-published: ${{ steps.get-next-version.outputs.new-release-published }}
@@ -82,7 +82,7 @@ jobs:
     needs: [ verify, build ]
     if: needs.verify.outputs.new-release-published == 'true'
     name: Release
-    runs-on: meza-ubuntu-slim
+    runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up node
