@@ -25,9 +25,9 @@ jobs:
     if: needs.verify.outputs.new-release-published == 'true'
     name: Build binaries for ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - name: Use Python 3.10.6
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '>=3.10.6'
       - name: Install dependencies
@@ -58,7 +58,7 @@ jobs:
     name: Release
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - name: Set up node
         uses: meza/action-setup-node-npm@main
         with:
