@@ -64,7 +64,7 @@ jobs:
           node-version-file: package.json
           cache: 'npm'
       - name: Set Windows environment
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'meza-windows-slim'
         run: |
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
@@ -74,7 +74,7 @@ jobs:
         run: npm run build && npm run prebuilds
       - name: "Test"
         run: npm run test
-      - uses: actions/upload-artifact@0c366cb4fc8897159c94880f94b55bc716ad6a66 # master
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: prebuilds-${{ matrix.os }}
           path: prebuilds
@@ -92,15 +92,15 @@ jobs:
           cache: 'npm'
       - name: "Build"
         run: npm run build
-      - uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: prebuilds-windows-latest
+          name: prebuilds-meza-windows-slim
           path: prebuilds
-      - uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: prebuilds-self-hosted
+          name: prebuilds-meza-ubuntu-slim
           path: prebuilds
-      - uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: prebuilds-macos-latest
           path: prebuilds
