@@ -1,29 +1,37 @@
 {
-  "extends": "@meza/tsconfig-base",
   "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "declaration": true,
     "declarationMap": true,
-    "tsBuildInfoFile": ".cache/.tsbuildinfo",
-    "incremental": true,
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node16",
-    "emitDeclarationOnly": false,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveSymlinks": true,
+    "resolveJsonModule": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext",
+    "types": ["node"],
+    "useUnknownInCatchVariables": true,
+    "tsBuildInfoFile": ".cache/.tsbuildinfo",
+    "incremental": true,
+    "emitDeclarationOnly": false,
     "outDir": "./dist/esm",
-    "isolatedModules": true,
-    "sourceRoot": "src",
-    "noPropertyAccessFromIndexSignature": false
+    "rootDir": "./src/esm",
+    "sourceRoot": "src"
   },
-  "include": [
-    "src/esm/**/*.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
-  "ts-node": {
-    "files": true
-  }
+  "include": ["src/esm/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
 }
