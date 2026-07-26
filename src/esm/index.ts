@@ -1,6 +1,6 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
-import { createRequire } from 'module';
-import * as url from 'url';
+import * as url from 'node:url';
 
 export interface Curseforge {
   fingerprint: (filePath: string) => number;
