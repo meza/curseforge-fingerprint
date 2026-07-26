@@ -38,7 +38,9 @@ jobs:
         id: get-next-version
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      - run: echo "Need release? ${{ steps.get-next-version.outputs.new-release-published }}" >> $GITHUB_STEP_SUMMARY
+      - env:
+          NEED_RELEASE: ${{ steps.get-next-version.outputs.new-release-published }}
+        run: echo "Need release? $NEED_RELEASE" >> "$GITHUB_STEP_SUMMARY"
 
   build:
     strategy:

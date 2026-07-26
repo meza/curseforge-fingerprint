@@ -33,28 +33,28 @@ namespace fingerprint {
     return size;
   }
 
-  uint32_t compute_hash(Buffer& buffer) {
-    const uint32_t multiplex = 1540483477;
-    const uint32_t length = buffer.size();
-    uint32_t num1 = length;
+  std::uint32_t compute_hash(Buffer& buffer) {
+    const std::uint32_t multiplex = 1540483477;
+    const std::uint32_t length = buffer.size();
+    std::uint32_t num1 = length;
 
     num1 = compute_normalized_length(buffer);
 
-    uint32_t num2 = (uint32_t)1 ^ num1;
-    uint32_t num3 = 0;
-    uint32_t num4 = 0;
+    std::uint32_t num2 = (std::uint32_t)1 ^ num1;
+    std::uint32_t num3 = 0;
+    std::uint32_t num4 = 0;
 
-    for (uint32_t index = 0; index < length; ++index) {
+    for (std::uint32_t index = 0; index < length; ++index) {
 
       unsigned char b = buffer[index];
 
       if (!is_whitespace_character(b)) {
-        num3 |= (uint32_t)b << num4;
+        num3 |= (std::uint32_t)b << num4;
         num4 += 8;
         if (num4 == 32) {
-          uint32_t num6 = num3 * multiplex;
+          std::uint32_t num6 = num3 * multiplex;
 
-          uint32_t num7 = (num6 ^ num6 >> 24) * multiplex;
+          std::uint32_t num7 = (num6 ^ num6 >> 24) * multiplex;
 
           num2 = num2 * multiplex ^ num7;
           num3 = 0;
@@ -67,16 +67,16 @@ namespace fingerprint {
       num2 = (num2 ^ num3) * multiplex;
     }
 
-    uint32_t num6 = (num2 ^ num2 >> 13) * multiplex;
+    std::uint32_t num6 = (num2 ^ num2 >> 13) * multiplex;
 
     return num6 ^ num6 >> 15;
   }
 
-  uint32_t compute_normalized_length(Buffer& buffer) {
-    int32_t num1 = 0;
-    const uint32_t length = buffer.size();
+  std::uint32_t compute_normalized_length(Buffer& buffer) {
+    std::int32_t num1 = 0;
+    const std::uint32_t length = buffer.size();
 
-    for (uint32_t index = 0; index < length; ++index) {
+    for (std::uint32_t index = 0; index < length; ++index) {
       if (!is_whitespace_character(buffer[index])) {
         ++num1;
       }
