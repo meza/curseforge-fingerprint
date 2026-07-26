@@ -18,14 +18,28 @@ env:
 
 jobs:
   verify:
-    uses: meza/shared-github-workflows/.github/workflows/default-node-npm-ci.yml@cf630bfc334354a662e60d05adaf7615b7399b00 # main
-    secrets:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    with:
-        test: false
-        node-version: "latest"
-        junit-report-path: "reports/junit.xml"
-        cobertura-report-path: "reports/coverage/cobertura-coverage.xml"
+    runs-on: meza-ubuntu-slim
+    name: 🔎 Lint and Test
+    outputs:
+      new-release-published: ${{ steps.get-next-version.outputs.new-release-published }}
+      new-release-version: ${{ steps.get-next-version.outputs.new-release-version }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: package.json
+          cache: npm
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Run Tests
+        run: npm run ci
+      - run: npx semantic-release --dry-run
+        id: get-next-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: echo "Need release? ${{ steps.get-next-version.outputs.new-release-published }}" >> $GITHUB_STEP_SUMMARY
+
   build:
     strategy:
       matrix:
