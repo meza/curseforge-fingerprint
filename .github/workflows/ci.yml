@@ -33,10 +33,10 @@ jobs:
       - name: Install dependencies
         run: python3 -m pip install setuptools
       - name: Set up node
-        uses: meza/action-setup-node-npm@aab30425e3491190cf8c17b6064a34777a3a425a # main
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 20.5.0
-          cache-name: ${{ needs.verify.outputs.cache-name }}
+          node-version-file: package.json
+          cache: 'npm'
       - name: Set Windows environment
         if: matrix.os == 'windows-latest'
         run: |
@@ -60,10 +60,10 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up node
-        uses: meza/action-setup-node-npm@aab30425e3491190cf8c17b6064a34777a3a425a # main
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: latest
-          cache-name: ${{ needs.verify.outputs.cache-name }}
+          node-version-file: package.json
+          cache: 'npm'
       - name: "Build"
         run: npm run build
       - uses: actions/download-artifact@2a5974104b6d5dbdb2f9468a3e54da3bdd241578 # master
