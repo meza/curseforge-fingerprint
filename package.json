@@ -133,5 +133,11 @@
   },
   "engines": {
     "node": "24.18.0"
+  },
+  "allowScripts": {
+    "core-js@3.42.0": true,
+    "core-js@3.49.0": true,
+    "esbuild@0.28.1": true,
+    "lefthook@1.4.8": true
   }
 }
