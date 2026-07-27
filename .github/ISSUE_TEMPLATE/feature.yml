@@ -1,0 +1,53 @@
+name: Feature proposal
+description: Propose an outcome or capability
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use https://github.com/meza/curseforge-fingerprint/discussions for usage questions. Do not disclose vulnerabilities here; use https://github.com/meza/curseforge-fingerprint/security/policy.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should be solved?
+      description: Describe who experiences the problem and why the current behaviour is insufficient.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What outcome do you want?
+      description: Describe the observable result without assuming a particular implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Include existing workarounds and their limitations.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and compatibility
+      description: Note affected users, interfaces, platforms, migration needs, or breaking changes.
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: Would you help implement this?
+      options:
+        - "Yes"
+        - "Maybe, with guidance"
+        - "No"
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing issues and discussions for this proposal.
+          required: true
+        - label: This proposal does not disclose a security vulnerability.
+          required: true
