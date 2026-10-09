@@ -83,7 +83,7 @@
     "@types/node": "^24.0.0",
     "bindings": "^1.5.0",
     "core-js": "^3.25.3",
-    "node-gyp": "^13.0.1",
+    "node-gyp": "^13.1.0",
     "node-gyp-build": "^4.8.4",
     "prebuild-install": "^7.1.1",
     "prebuildify": "^6.0.0",
