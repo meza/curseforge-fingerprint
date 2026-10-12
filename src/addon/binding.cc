@@ -1,6 +1,7 @@
 #include <node_api.h>
 #include <assert.h>
 #include <cstring>
+#include <cstdlib>
 #include <iostream>
 
 #include "fingerprint.h"
@@ -21,7 +22,7 @@ napi_value HashIt(napi_env env, const napi_callback_info info) {
   }
 
   // Parse jar path from args
-  const char* jar_file_path = NULL;
+  char* jar_file_path = NULL;
   size_t jar_file_pathl;
 
   status = napi_typeof(env, args[0], &type);
@@ -33,10 +34,11 @@ napi_value HashIt(napi_env env, const napi_callback_info info) {
 
   status = napi_get_value_string_utf8(env, args[0], NULL, 0, &jar_file_pathl);
   jar_file_path = (char *)malloc(jar_file_pathl + 1);
-  status = napi_get_value_string_utf8(env, args[0], (char *)jar_file_path, jar_file_pathl + 1, &jar_file_pathl);
+  status = napi_get_value_string_utf8(env, args[0], jar_file_path, jar_file_pathl + 1, &jar_file_pathl);
   assert(status == napi_ok);
 
   fingerprint::Buffer jar_buffer = fingerprint::get_jar_contents(jar_file_path);
+  free(jar_file_path);
 
   if (jar_buffer.empty()) {
     napi_throw_error(env, NULL, "Jar file was empty");
