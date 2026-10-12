@@ -34,6 +34,10 @@ napi_value HashIt(napi_env env, const napi_callback_info info) {
 
   status = napi_get_value_string_utf8(env, args[0], NULL, 0, &jar_file_pathl);
   jar_file_path = (char *)malloc(jar_file_pathl + 1);
+  if (jar_file_path == NULL) {
+    napi_throw_error(env, NULL, "Failed to allocate memory for the file path");
+    return 0;
+  }
   status = napi_get_value_string_utf8(env, args[0], jar_file_path, jar_file_pathl + 1, &jar_file_pathl);
   assert(status == napi_ok);
 
