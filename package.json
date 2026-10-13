@@ -80,10 +80,10 @@
     ]
   },
   "dependencies": {
-    "@types/node": "^24.0.0",
+    "@types/node": "^24.19.1",
     "bindings": "^1.5.0",
     "core-js": "^3.25.3",
-    "node-gyp": "^13.0.1",
+    "node-gyp": "^13.1.0",
     "node-gyp-build": "^4.8.4",
     "prebuild-install": "^7.1.1",
     "prebuildify": "^6.0.0",
@@ -107,8 +107,8 @@
     "@semantic-release/commit-analyzer": "13.0.1",
     "@semantic-release/exec": "7.1.0",
     "@semantic-release/git": "11.0.1",
-    "@semantic-release/github": "12.0.9",
-    "@semantic-release/npm": "13.1.5",
+    "@semantic-release/github": "12.0.10",
+    "@semantic-release/npm": "13.2.0",
     "@semantic-release/release-notes-generator": "14.1.1",
     "@types/uuid": "9.0.2",
     "convert-extension": "^0.3.0",
@@ -118,13 +118,13 @@
     "npmignore": "^0.3.0",
     "rimraf": "4.4.1",
     "run-script-os": "^1.1.6",
-    "semantic-release": "25.0.8",
+    "semantic-release": "25.0.9",
     "semantic-release-export-data": "1.2.0",
     "tsx": "^4.16.5",
-    "uuid": "14.0.1"
+    "uuid": "14.0.2"
   },
   "engines": {
-    "node": "24.18.0"
+    "node": "24.21.0"
   },
   "allowScripts": {
     "core-js@3.42.0": true,
