@@ -114,7 +114,7 @@
     "convert-extension": "^0.3.0",
     "is-ci": "3.0.1",
     "lefthook": "1.4.8",
-    "npm-run-all2": "9.0.2",
+    "npm-run-all2": "9.0.3",
     "npmignore": "^0.3.0",
     "rimraf": "4.4.1",
     "run-script-os": "^1.1.6",
